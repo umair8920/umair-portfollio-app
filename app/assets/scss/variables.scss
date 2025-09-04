@@ -1,0 +1,22 @@
+// app/assets/scss/variables.scss
+
+// Base theme palette
+$primary: #3b82f6;   // blue-500
+$secondary: #64748b;
+$button-bg: #A53DFF; // gray/slate
+$footer: #1f2937;    // gray-800
+$background: #ffffff;
+$surface: #ffffff;
+
+$error: #ef4444;
+$success: #22c55e;
+
+// Aliases (if you want both naming styles)
+$color-primary: $primary;
+$color-secondary: $secondary;
+$color-button-bg: $button-bg;
+$color-footer: $footer;
+$color-background: $background;
+$color-surface: $surface;
+$color-error: $error;
+$color-success: $success;
