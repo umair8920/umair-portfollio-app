@@ -3,9 +3,12 @@
     <h2 class="section-title text-center mb-10">My Projects</h2>
 
     <v-carousel
+      v-model="current"
       height="600"
       hide-delimiters
       show-arrows="hover"
+      :cycle="true"
+      :key="projects.length"
       class="project-carousel"
     >
       <v-carousel-item
@@ -72,41 +75,19 @@
 </template>
 
 <script setup lang="ts">
-const projects = [
-  {
-    title: 'Micasi Search Console Tracker – Apimio',
-    description:
-      'Designed and developed a SaaS application for marketing analytics and management with scalable microservice-based architecture. Implemented billing, multi-workspace management, and a high-performance backend with FastAPI and MongoDB.',
-    image: new URL('~/assets/images/profile.png', import.meta.url).href,
-    skills: [
-      'FastAPI',
-      'MongoDB',
-      'Redis',
-      'JWT',
-      'React',
-      'Tailwind',
-      'Redux Toolkit',
-      'RTK Query',
-      'Google Cloud Run',
-    ],
-    link: 'https://app.micasi.com/',
-  },
-  {
-    title: 'Code Analyzer – Apimio',
-    description:
-      'Refactored and optimized an AI-powered repository analysis platform built with Next.js (TypeScript). Integrated Firebase Auth with Google OAuth and structured state management with Redux Toolkit.',
-    image: new URL('~/assets/images/profile.png', import.meta.url).href,
-    skills: ['Next.js', 'TypeScript', 'Firebase Auth', 'Google OAuth', 'Redux Toolkit'],
-  },
-  {
-    title: 'Real-time Multiplayer Chess – Freelance',
-    description:
-      'Built a fully responsive chess platform with real-time matches, timers, resign/draw options, and an emoji chat system. Designed both frontend and backend using Node.js, Express, Socket.IO, and MongoDB.',
-    image: new URL('~/assets/images/profile.png', import.meta.url).href,
-    skills: ['Node.js', 'Express', 'Socket.IO', 'MongoDB', 'JWT', 'chess.js', 'chessboard.js'],
-    repo: 'https://github.com/umair8920/chess-app.git',
-  },
-]
+import { ref, watch, nextTick } from 'vue'
+import { useProjects } from '.././composables/useProjects'
+
+const { projects, pending, error, refresh } = useProjects()
+
+// Ensure the first slide is selected when data arrives
+const current = ref(0)
+watch(projects, async (list) => {
+  if (Array.isArray(list) && list.length > 0) {
+    await nextTick()
+    current.value = 0
+  }
+}, { immediate: true })
 </script>
 
 <style scoped lang="scss">

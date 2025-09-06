@@ -6,6 +6,21 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  // Fix SSR hydration issues
+  ssr: true,
+  
+  // Ensure proper CSS handling
+  css: [
+    'vuetify/styles',
+    '@mdi/font/css/materialdesignicons.css',
+  ],
+
+  // Ensure plugins from project root load in correct order (Vuetify first)
+  plugins: [
+    '~~/plugins/vuetify',
+    '~~/plugins/api',
+  ],
+
   // Server config
   nitro: {
     devProxy: {
@@ -42,7 +57,7 @@ export default defineNuxtConfig({
       target: 'esnext',
     },
     optimizeDeps: {
-      include: [],
+      include: ['vuetify'],
     },
     css: {
       preprocessorOptions: {
@@ -57,4 +72,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE_URL || '/api'
+    }
+  }
 })
+

@@ -7,7 +7,21 @@
             <!-- Left: Profile Picture -->
             <v-col cols="12" md="4" class="d-flex justify-center">
               <v-avatar size="220">
-                <v-img src="~/assets/images/profile.png" alt="Umair Masood" cover />
+                <v-img
+                  v-if="profile?.profile_image"
+                  :src="profile.profile_image"
+                  alt="Profile"
+                  cover
+                />
+                <v-img
+                  v-else
+                  lazy-src="~/assets/images/profile-placeholder.png"
+                  alt="Profile"
+                  class="profile-img"
+                  cover
+                  aspect-ratio="1"
+                  transition="fade-transition"
+                />
               </v-avatar>
             </v-col>
 
@@ -20,8 +34,8 @@
                     <v-icon color="buttonBg">mdi-email</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-title>
-                    <a href="mailto:umairdev89@gmail.com" class="contact-link">
-                      umairdev89@gmail.com
+                    <a :href="profile?.email ? `mailto:${profile.email}` : '#'" class="contact-link">
+                      {{ profile?.email || '—' }}
                     </a>
                   </v-list-item-title>
                 </v-list-item>
@@ -31,8 +45,8 @@
                     <v-icon color="buttonBg">mdi-phone</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-title>
-                    <a href="tel:+923400728009" class="contact-link">
-                      +92 3400728009
+                    <a :href="profile?.phone ? `tel:${profile.phone}` : '#'" class="contact-link">
+                      {{ profile?.phone || '—' }}
                     </a>
                   </v-list-item-title>
                 </v-list-item>
@@ -42,13 +56,7 @@
                     <v-icon color="buttonBg">mdi-linkedin</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-title>
-                    <a
-                      href="https://www.linkedin.com/in/muhammad-umair-masood-b05805381"
-                      target="_blank"
-                      class="contact-link"
-                    >
-                      LinkedIn
-                    </a>
+                    <a :href="profile?.linkedin || '#'" target="_blank" class="contact-link">LinkedIn</a>
                   </v-list-item-title>
                 </v-list-item>
 
@@ -57,13 +65,7 @@
                     <v-icon color="buttonBg">mdi-github</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-title>
-                    <a
-                      href="https://github.com/umair8920"
-                      target="_blank"
-                      class="contact-link"
-                    >
-                      GitHub
-                    </a>
+                    <a :href="profile?.github || '#'" target="_blank" class="contact-link">GitHub</a>
                   </v-list-item-title>
                 </v-list-item>
 
@@ -72,7 +74,7 @@
                     <v-icon color="buttonBg">mdi-map-marker</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-title>
-                    Islamabad, Pakistan
+                    {{ profile?.work_location || '—' }}
                   </v-list-item-title>
                 </v-list-item>
               </v-list>
@@ -83,6 +85,11 @@
     </v-row>
   </v-container>
 </template>
+
+<script setup lang="ts">
+import { useProfile } from '.././composables/useProfile'
+const { profile } = useProfile()
+</script>
 
 <style scoped lang="scss">
 .contact-card {
