@@ -127,6 +127,8 @@
 import { ref, onMounted } from 'vue'
 import { useSnackbar } from 'vuetify-use-dialog'
 
+useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
+
 type Project = {
   id?: number
   title: string

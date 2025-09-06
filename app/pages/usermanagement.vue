@@ -181,6 +181,8 @@
 import { ref, onMounted, computed } from 'vue'
 import { useSnackbar } from 'vuetify-use-dialog'
 
+useHead({ meta: [{ name: 'robots', content: 'noindex, nofollow' }] })
+
 type Profile = {
   id?: number | string
   hero_name: string
